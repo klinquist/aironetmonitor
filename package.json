@@ -1,0 +1,22 @@
+{
+	"name": "aironetmonitor",
+	"description": "Node.js app that sends me a text message when an unauthorized mac address associates to my wireless network.  Listens to a redis queue - my aironet AP is syslogging to a server which is echoing the syslogs to Redis.  See https://github.com/klinquist/syslogd-to-redis",
+	"version": "1.0.0",
+	"engines": { "node": ">=0.8.18" },
+	"contributors": [ 
+    {
+      "name": "Kris Linquist",
+      "email": "kris@linquist.net"
+    } 
+    ],
+    "dependencies": {
+      "redis": "0.8.2",
+      "hiredis": "0.1.14",
+      "mysql": "2.0.0-alpha7"
+    },
+    "author": "Kris Linquist",
+    "repository": {
+      "type": "git"
+    , "url": "https://github.com/klinquist/aironetmonitor"
+    }
+}

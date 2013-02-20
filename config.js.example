@@ -1,0 +1,15 @@
+var redisqueue = "homeevents";							//listen to what redis queue?
+var client = redis.createClient('','127.0.0.1');		//redis server credentials
+
+var Twilio = require('twilio-js');
+Twilio.AccountSid = "xxxxxx";  							//Twilio credentials
+Twilio.AuthToken  = "xxxxxx";							//Twilio credentials	
+var TwilioToNumber = '+1408xxxxxx';						//Your mobile phone #?
+var TwilioFromNumber = '+16822376237';					//A  number you have registered with Twilio
+
+var connection = mysql.createConnection({
+  host     : 'localhost',								//mysql credentials
+  user     : 'root',
+  password : 'xxxxx',
+  database : 'home'
+});
