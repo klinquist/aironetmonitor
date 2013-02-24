@@ -10,7 +10,7 @@ function sendsms(message) {
         from: TwilioFromNumber,
         body: message
     });
-    console.log("sending SMS to " + phno + ": " + message);
+    console.log("sending SMS to " + TwilioToNumber + ": " + message);
 }
 
 function addWorker() {
@@ -20,11 +20,13 @@ function addWorker() {
         console.log("Redis error: " + err);
     });
     client.on("message", function (channel, message) {
+    	console.log("message: " + message);
         var homeevents = JSON.parse(message);
         if (homeevents.devicetype == "wirelessAP") {
             if (homeevents.payload.data.indexOf("-ASSOC") !== -1) {
-                var mac = homeevents.payload.data.match(/Station(.*?)Associated/)[1].trim();
-                if (mac !== "") { //get rid of reassociations
+                var mac = homeevents.payload.data.match(/Station(.*?)Associated/);
+                if (mac) {   //Make sure the RegEx returns something
+                	mac = mac[1].trim();  
                     connection.query('SELECT * from mactable where `mac` = \'' + mac + '\'', function (err, rows, fields) {
                         if (err) console.log("Mysql error while looking through mac table: " + err.code);
                         if (rows.length == "0") {
