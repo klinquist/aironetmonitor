@@ -20,7 +20,6 @@ function addWorker() {
         console.log("Redis error: " + err);
     });
     client.on("message", function (channel, message) {
-    	console.log("message: " + message);
         var homeevents = JSON.parse(message);
         if (homeevents.devicetype == "wirelessAP") {
             if (homeevents.payload.data.indexOf("-ASSOC") !== -1) {
