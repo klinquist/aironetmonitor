@@ -27,27 +27,29 @@ function addWorker() {
                 if (mac) {   //Make sure the RegEx returns something
                 	mac = mac[1].trim();  
                 	var ts = Math.round((new Date()).getTime() / 1000);
+                	var ts1 = new Date();
+                	var humantime = ts1.getHours()+ ":" + ts1.getMinutes();
                     connection.query('SELECT * from mactable where `mac` = \'' + mac + '\'', function (err, rows, fields) {
                         if (err) console.log("Mysql error while looking through mac table: " + err.code);
                         if (rows.length == "0") {
-                            console.log("New device detected on home network: " + mac);
+                            console.log(humantime + " New device detected on home network: " + mac);
                             sendsms("New device detected on home network: " + mac);
                             connection.query('INSERT INTO mactable VALUES (\'' + mac + '\', \'' + ts + '\', \'\', \'\')');
                         } else {
                             if (rows[0].report !== "N") {
                                 if (rows[0].devicename !== "") {
-                                    console.log("Device detected on home network: " + rows[0].devicename + " (" + mac + ")");
+                                    console.log(humantime + " Device detected on home network: " + rows[0].devicename + " (" + mac + ")");
                                     if (ts - parseInt(rows[0].lastseen) > howoften) {
-	                                    sendsms("Device detected on home network: " + rows[0].devicename + " (" + mac + ")");
+	                                    sendsms(humantime + " Device detected on home network: " + rows[0].devicename + " (" + mac + ")");
 	                                }
                                 } else {
-                                    console.log("Device detected on home network: " + mac);
+                                    console.log(humantime + " Device detected on home network: " + mac);
                                     if (ts - parseInt(rows[0].lastseen) > howoften) {
-                                    	sendsms("Device detected on home network: " + mac);
+                                    	sendsms(humantime + " Device detected on home network: " + mac);
                                     }
                                 }
                             } else {
-                                console.log("Device detected on home network: " + rows[0].devicename + " (" + mac + ")");
+                                console.log(humantime + " Device detected on home network: " + rows[0].devicename + " (" + mac + ")");
                             }
                         }
                     });
