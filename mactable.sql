@@ -7,7 +7,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `mactable`;
 CREATE TABLE `mactable` (
   `mac` varchar(14) NOT NULL,
-  `lastseen` datetime NOT NULL,
+  `lastseen` int(16) NOT NULL,
   `devicename` varchar(128) NOT NULL,
   `report` varchar(1) NOT NULL,
   PRIMARY KEY (`mac`)
