@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var redis = require('redis');
 var howoften = 43200;  //  alert every 12 hours
 var fs = require('fs');
-eval(fs.readFileSync('config.js') + '');
+eval(fs.readFileSync(__dirname + '/config.js') + '');
 
 function sendsms(message) {
     Twilio.SMS.create({
@@ -25,7 +25,7 @@ function addWorker() {
             if (homeevents.payload.data.indexOf("-ASSOC") !== -1) {
                 var mac = homeevents.payload.data.match(/Station(.*?)Associated/);
                 if (mac) {   //Make sure the RegEx returns something
-                	mac = mac[1].trim();  
+                	mac = mac[1].trim();
                 	var ts = Math.round((new Date()).getTime() / 1000);
                 	var ts1 = new Date();
                 	var humantime = ts1.getHours()+ ":" + ts1.getMinutes();
