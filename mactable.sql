@@ -17,7 +17,7 @@ CREATE TABLE `mactable` (
 --  Records of `mactable`
 -- ----------------------------
 BEGIN;
-INSERT INTO `mactable` VALUES ('d023.dbab.0000', '2012-09-20 10:46:53', 'Your iPhone!', 'N');
+INSERT INTO `mactable` VALUES ('d023.dbab.0000', '1361806071', 'Your iPhone!', 'N');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
