@@ -25,10 +25,11 @@ function addWorker() {
             if (homeevents.payload.data.indexOf("-ASSOC") !== -1) {
                 var mac = homeevents.payload.data.match(/Station(.*?)Associated/);
                 if (mac) {   //Make sure the RegEx returns something
+                	connection.connect();
                 	mac = mac[1].trim();
                 	var ts = Math.round((new Date()).getTime() / 1000);
                 	var ts1 = new Date();
-                	var humantime = ts1.getHours()+ ":" + ts1.getMinutes();
+                	if (ts1.getMinutes() < 10) {var humantime = ts1.getHours()+ ":0" + ts1.getMinutes();} else { var humantime = ts1.getHours()+ ":" + ts1.getMinutes();  }
                     connection.query('SELECT * from mactable where `mac` = \'' + mac + '\'', function (err, rows, fields) {
                         if (err) console.log("Mysql error while looking through mac table: " + err.code);
                         if (rows.length == "0") {
@@ -56,6 +57,7 @@ function addWorker() {
                     connection.query('UPDATE mactable SET lastseen = \'' + ts + '\' WHERE mac = \'' + mac + '\'', function (err) {
                         if (err) console.log("Mysql error trying to update last seen table: " + err.code);
                     });
+                    connection.end();
                 }
             }
         }
@@ -84,7 +86,7 @@ function handleDisconnect(connection) {
 
 
 
-connection.connect();
+
 handleDisconnect(connection);
 
 
