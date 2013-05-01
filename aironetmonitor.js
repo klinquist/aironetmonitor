@@ -25,7 +25,8 @@ function addWorker() {
             if (homeevents.payload.data.indexOf("-ASSOC") !== -1) {
                 var mac = homeevents.payload.data.match(/Station(.*?)Associated/);
                 if (mac) {   //Make sure the RegEx returns something
-                	connection.connect();
+                	//connection.connect();
+                    var connection = mysql.createConnection(mysqllogindetails);
                 	mac = mac[1].trim();
                 	var ts = Math.round((new Date()).getTime() / 1000);
                 	var ts1 = new Date();
@@ -59,35 +60,19 @@ function addWorker() {
                     });
                     connection.end();
                 }
+            } else {
+	            //console.log("Ignoring " + homeevents.payload.data);
             }
         }
     });
+
+
 }
 
 
-function handleDisconnect(connection) {
-  connection.on('error', function(err) {
-    if (!err.fatal) {
-      return;
-    }
-
-    if (err.code !== 'PROTOCOL_CONNECTION_LOST') {
-      throw err;
-    }
-
-    console.log('Re-connecting lost connection: ' + err.stack);
-
-    connection = mysql.createConnection(connection.config);
-    handleDisconnect(connection);
-    connection.connect();
-  });
-}
-
-
-
-
-
-handleDisconnect(connection);
 
 
 addWorker();
+
+
+
